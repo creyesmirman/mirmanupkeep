@@ -1,5 +1,5 @@
 #!/bin/bash
-# Make a choice
+
 PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Quit: '
 options=("Printers" "MSC Manifest" "Rename Laptop" "Add/Remove Users" "Quit")
 select opt in "${options[@]}"
