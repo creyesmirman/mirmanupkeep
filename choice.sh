@@ -152,6 +152,7 @@ do
                 done
             ;;
         "Quit")
+            echo "Thank you."
             break;;
         *) echo "Invalid option";;
     esac
