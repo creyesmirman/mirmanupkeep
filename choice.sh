@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Quit: '
-options=("Printers" "MSC Manifest" "Rename Laptop" "Add/Remove Users" "Quit")
+PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Quit: '
+options=("Printers" "MSC Manifest" "Rename Laptop" "Add/Remove Users" "Enable/Disable Securly" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -50,17 +50,17 @@ do
                                 "us_student")
                                     echo "Changing manifest to $manifestopt"
                                     sudo defaults write /Library/Preferences/ManagedInstalls.plist ClientIdentifier $manifestopt
-                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Quit: '
+                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Quit: '
                                     break;;
                                 "ls_student")
                                     echo "Changing manifest to $manifestopt"
                                     sudo defaults write /Library/Preferences/ManagedInstalls.plist ClientIdentifier $manifestopt
-                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Quit: '
+                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Quit: '
                                     break;;
                                 "faculty")
                                     echo "Changing manifest to $manifestopt"
                                     sudo defaults write /Library/Preferences/ManagedInstalls.plist ClientIdentifier $manifestopt
-                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Quit: '
+                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Quit: '
                                     break;;
                                 *) echo "Choose a valid manifest number."
                             esac
@@ -148,6 +148,26 @@ do
                                 break;;
                     * )
                         echo "Please use A or R."
+                    esac
+                done
+            ;;
+        "Enable/Disable Securly")
+            echo "Securly Settings"
+                while true; do
+                read -p "Do you want to (E)nable or (D)isable Securly?: " securlychoice
+                    case $securlychoice in
+                    [Ee] )
+                        networksetup -setdnsservers Wi-Fi 50.18.216.174 50.18.216.175
+                        sudo killall -HUP mDNSResponder
+                        echo "Securly Enabled"
+                        break;;
+                    [Dd] )
+                        networksetup -setdnsservers Wi-Fi Empty
+                        sudo killall -HUP mDNSResponder
+                        echo "Securly Disabled"
+                        break;;
+                    * )
+                        echo "Please selec 'E' or 'D'."
                     esac
                 done
             ;;
