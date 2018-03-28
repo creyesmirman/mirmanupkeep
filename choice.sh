@@ -31,7 +31,7 @@ do
                             fi
                             break;;
                             [Nn] ) echo "OK."; break;;
-                            * ) echo "Please answer Y or N";;
+                            * ) echo "Please answer Y or N. ";;
                         esac
                     done
             fi
@@ -68,7 +68,7 @@ do
                         break;;
                         [Nn] ) echo "OK."
                         break;;
-                        * ) echo "Please answer Y or N";;
+                        * ) echo "Please answer Y or N. ";;
                     esac
                 done
             ;;
@@ -142,7 +142,7 @@ do
                                             fi
                                             break;;
                                         [Nn] ) echo "OK.";break;;
-                                        * ) echo "Please answer Y or N";;
+                                        * ) echo "Please answer Y or N. ";;
                                     esac
                                 done
                                 break;;
@@ -159,15 +159,15 @@ do
                     [Ee] )
                         networksetup -setdnsservers Wi-Fi 50.18.216.174 50.18.216.175
                         sudo killall -HUP mDNSResponder
-                        echo "Securly Enabled"
+                        echo "Securly Enabled."
                         break;;
                     [Dd] )
                         networksetup -setdnsservers Wi-Fi Empty
                         sudo killall -HUP mDNSResponder
-                        echo "Securly Disabled"
+                        echo "Securly Disabled."
                         break;;
                     * )
-                        echo "Please selec 'E' or 'D'."
+                        echo "Please select 'E' or 'D'."
                     esac
                 done
             ;;
