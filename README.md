@@ -8,5 +8,6 @@
     * Changing manifest from Managed Software Center
     * Naming/Renaming laptops
     * Adding/Removing users.
-* Commands in the works include:
     * Changing Securly settings for quick enable/disable.
+* Commands in the works include:
+    * TBA
