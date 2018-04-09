@@ -43,16 +43,16 @@ do
                     read -p "Would you like to change it? [Y or N] " manifestchoice
                     case $manifestchoice in
                         [Yy] ) PS3='Please choose from the following manifests: '
-                        options=('us_student' 'ls_student' 'faculty')
+                        options=('student_us' 'student_ls' 'faculty')
                         select manifestopt in "${options[@]}"
                         do 
                             case $manifestopt in
-                                "us_student")
+                                "student_us")
                                     echo "Changing manifest to $manifestopt"
                                     sudo defaults write /Library/Preferences/ManagedInstalls.plist ClientIdentifier $manifestopt
                                     PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Quit: '
                                     break;;
-                                "ls_student")
+                                "student_ls")
                                     echo "Changing manifest to $manifestopt"
                                     sudo defaults write /Library/Preferences/ManagedInstalls.plist ClientIdentifier $manifestopt
                                     PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Quit: '
