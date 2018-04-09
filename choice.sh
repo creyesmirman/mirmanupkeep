@@ -125,6 +125,7 @@ do
                         echo "Creating real name $arealname."
                         echo "Creating password of $apassword"
                         echo "Creating Unique ID of $usernum."
+                        echo "Please log in as the new user to enable other upkeep options."
                         break;;
                     [Rr] ) 
                         read -p "What is the username to be removed?: " userdelete
