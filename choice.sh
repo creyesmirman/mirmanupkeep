@@ -120,6 +120,7 @@ do
                         sudo dscl . -append /Groups/staff GroupMembership $ausername 
                         sudo dscl . delete /Users/$ausername jpegphoto
                         sudo dscl . create /Users/$ausername Picture /Library/User\ Pictures/Nature/Earth.png
+                        sudo createhomedir -c -u $ausername
 
                         echo "Creating user $ausername."
                         echo "Creating real name $arealname."
