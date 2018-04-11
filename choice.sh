@@ -38,7 +38,7 @@ do
             ;;
         "MSC Manifest")
             echo "Changing MSC Manifest"
-            echo "Manifest (Client Identifier) of this pc: $(defaults read /Library/Preferences/ManagedInstalls.plist | grep 'ClientIdentifier')"           
+            echo "Manifest (Client Identifier) of this pc: $(defaults read /Library/Preferences/ManagedInstalls.plist ClientIdentifier)"           
                 while true; do
                     read -p "Would you like to change it? [Y or N] " manifestchoice
                     case $manifestchoice in
