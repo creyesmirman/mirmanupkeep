@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Quit: '
-options=("Printers" "MSC Manifest" "Rename Laptop" "Add/Remove Users" "Enable/Disable Securly" "Quit")
+PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Quit '
+options=("Printers" "MSC Manifest" "Rename Laptop" "Add/Remove Users" "Enable/Disable Securly" "Update MSC" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -50,17 +50,17 @@ do
                                 "student_us")
                                     echo "Changing manifest to $manifestopt"
                                     sudo defaults write /Library/Preferences/ManagedInstalls.plist ClientIdentifier $manifestopt
-                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Quit: '
+                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Quit '
                                     break;;
                                 "student_ls")
                                     echo "Changing manifest to $manifestopt"
                                     sudo defaults write /Library/Preferences/ManagedInstalls.plist ClientIdentifier $manifestopt
-                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Quit: '
+                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Quit '
                                     break;;
                                 "faculty")
                                     echo "Changing manifest to $manifestopt"
                                     sudo defaults write /Library/Preferences/ManagedInstalls.plist ClientIdentifier $manifestopt
-                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Quit: '
+                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Quit '
                                     break;;
                                 *) echo "Choose a valid manifest number."
                             esac
@@ -173,6 +173,12 @@ do
                     esac
                 done
             ;;
+        "Update MSC")
+            echo "Updating MSC using the $(defaults read /Library/Preferences/ManagedInstalls.plist ClientIdentifier) Manifest."
+            echo "If there are system updates, you may need to reboot. Use the 'sudo reboot' command."
+            sudo managedsoftwareupdate && sudo managedsoftwareupdate --installonly
+            ;;
+
         "Quit")
             echo "Thank you."
             break;;
