@@ -6,6 +6,7 @@
 * Script includes common commands used at Mirman:
     * Allowing standard users to add printers without admin passwords.
     * Changing manifest from Managed Software Center.
+    * Updating Managed Software Center.
     * Naming/Renaming laptops.
     * Adding/Removing users.
     * Changing Securly settings for quick enable/disable.
