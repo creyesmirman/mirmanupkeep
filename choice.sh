@@ -174,6 +174,15 @@ do
                 done
             ;;
         "Update MSC")
+            echo "Checking for Shared folder..."
+            if [ -d /Users/Shared ]; then
+            echo "Shared folder found"
+            else
+            printf "Shared folder not found. \nCreating it in '/Users' and setting permissions.\n"
+            sudo mkdir /Users/Shared
+            sudo chmod 1777 /Users/Shared
+            fi
+
             echo "Updating MSC using the $(defaults read /Library/Preferences/ManagedInstalls.plist ClientIdentifier) Manifest."
             echo "If there are system updates, you may need to reboot. Use the 'sudo reboot' command."
             sudo managedsoftwareupdate && sudo managedsoftwareupdate --installonly
