@@ -126,15 +126,6 @@ do
                         echo "Creating real name $arealname."
                         echo "Creating password of $apassword"
                         echo "Creating Unique ID of $usernum."
-                        echo "Setting Custom Dock..."
-                        cd /tmp
-                        git clone --quiet https://github.com/creyesmirman/mirmanupkeep.git
-                        cd mirmanupkeep
-                        sudo cp com.apple.dock.plist /Users/$ausername/Library/Preferences
-                        dockutil --remove Downloads
-                        sudo chmod 644 /Users/$ausername/Library/Preferences/com.apple.dock.plist              
-                        cd /tmp
-                        rm -rf mirmanupkeep
                         break;;
                     [Rr] ) 
                         read -p "What is the username to be removed?: " userdelete
