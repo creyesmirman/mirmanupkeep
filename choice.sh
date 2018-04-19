@@ -126,7 +126,13 @@ do
                         echo "Creating real name $arealname."
                         echo "Creating password of $apassword"
                         echo "Creating Unique ID of $usernum."
-                        echo "Please log in as the new user to enable other upkeep options."
+                        echo "Setting Custom Dock..."
+                        cd /tmp
+                        git clone --quiet https://github.com/creyesmirman/mirmanupkeep.git
+                        cd mirmanupkeep
+                        sudo cp com.apple.dock.plist /Users/$ausername/Library/Preferences                        
+                        cd /tmp
+                        rm -rf mirmanupkeep
                         break;;
                     [Rr] ) 
                         read -p "What is the username to be removed?: " userdelete
@@ -172,7 +178,7 @@ do
                         echo "Please select 'E' or 'D'."
                     esac
                 done
-            ;;
+            ;; 
         "Update MSC")
             echo "Checking for Shared folder..."
             if [ -d /Users/Shared ]; then
