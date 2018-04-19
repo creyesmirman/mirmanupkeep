@@ -132,9 +132,7 @@ do
                         cd mirmanupkeep
                         sudo cp com.apple.dock.plist /Users/$ausername/Library/Preferences
                         dockutil --remove Downloads
-                        dockutil --remove Photos --allhomes
-                        dockutil --remove iBooks --allhomes
-                        dockutil --remove Siri --allhomes                       
+                        sudo chmod 644 /Users/$ausername/Library/Preferences/com.apple.dock.plist              
                         cd /tmp
                         rm -rf mirmanupkeep
                         break;;
