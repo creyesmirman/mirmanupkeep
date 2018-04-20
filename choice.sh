@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Quit '
-options=("Printers" "MSC Manifest" "Rename Laptop" "Add/Remove Users" "Enable/Disable Securly" "Update MSC" "Quit")
+PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Set Dock 8:Quit '
+options=("Printers" "MSC Manifest" "Rename Laptop" "Add/Remove Users" "Enable/Disable Securly" "Update MSC" "Set Dock" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -50,17 +50,17 @@ do
                                 "student_us")
                                     echo "Changing manifest to $manifestopt"
                                     sudo defaults write /Library/Preferences/ManagedInstalls.plist ClientIdentifier $manifestopt
-                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Quit '
+                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Set Dock 8:Quit '
                                     break;;
                                 "student_ls")
                                     echo "Changing manifest to $manifestopt"
                                     sudo defaults write /Library/Preferences/ManagedInstalls.plist ClientIdentifier $manifestopt
-                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Quit '
+                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Set Dock 8:Quit '
                                     break;;
                                 "faculty")
                                     echo "Changing manifest to $manifestopt"
                                     sudo defaults write /Library/Preferences/ManagedInstalls.plist ClientIdentifier $manifestopt
-                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Quit '
+                                    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Set Dock 8:Quit '
                                     break;;
                                 *) echo "Choose a valid manifest number."
                             esac
@@ -175,7 +175,7 @@ do
         "Update MSC")
             echo "Checking for Shared folder..."
             if [ -d /Users/Shared ]; then
-            echo "Shared folder found"
+            echo "Shared folder found."
             else
             printf "Shared folder not found. \nCreating it in '/Users' and setting permissions.\n"
             sudo mkdir /Users/Shared
@@ -186,6 +186,43 @@ do
             echo "If there are system updates, you may need to reboot. Use the 'sudo reboot' command."
             sudo managedsoftwareupdate && sudo managedsoftwareupdate --installonly
             ;;
+        "Set Dock"
+            set_dock () {
+                sudo dockutil --remove all --allhomes
+                sudo dockutil --add '/Applications/Google Chrome.app' --allhomes
+                sudo dockutil --add '~/Downloads' --allhomes
+                sudo dockutil --add '~/Applications' --allhomes
+                sudo killall Dock 
+            }
+            set_dock_user () {
+                sudo dockutil --remove all /Users/$1
+                sudo dockutil --add 'Applications/Google Chrome.app' /Users/$1
+                sudo dockutil --add '~/Downloads' /Users/$1
+                sudo dockutil --add '~/Applications' /Users/$1
+                
+                if [ $(whoami) == $1 ]; then
+                    sudo killall Dock
+                fi
+
+            }
+
+            echo "Setting Dock"
+            while true; do
+            read -p "Do you want to set for (A)ll Docks or (S)pecific Dock?: " dockchoice
+                case $dockchoice in
+                [Aa] )
+                    echo "Setting Dock for all Users"
+                    set_dock
+                    break;;
+                [Ss] )
+                    read -p "What is the username of the dock you wish to set?: " dockuser
+                    echo "Setting Dock for $dockuser."
+                    set_dock_user $dockuser
+                    break;;
+                * )
+                    echo "Please choose 'A' or 'S'."
+                esac
+            done
 
         "Quit")
             echo "Thank you."
