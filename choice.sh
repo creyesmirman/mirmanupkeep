@@ -186,7 +186,7 @@ do
             echo "If there are system updates, you may need to reboot. Use the 'sudo reboot' command."
             sudo managedsoftwareupdate && sudo managedsoftwareupdate --installonly
             ;;
-        "Set Dock"
+        "Set Dock")
             set_dock () {
                 sudo dockutil --remove all --allhomes
                 sudo dockutil --add '/Applications/Google Chrome.app' --allhomes
@@ -223,7 +223,7 @@ do
                     echo "Please choose 'A' or 'S'."
                 esac
             done
-
+            ;;
         "Quit")
             echo "Thank you."
             break;;
