@@ -194,14 +194,14 @@ do
                 sudo dockutil --remove all --allhomes
                 sudo dockutil --add '/Applications/Google Chrome.app' --allhomes
                 sudo dockutil --add '~/Downloads' --allhomes
-                sudo dockutil --add '~/Applications' --allhomes
+                sudo dockutil --add '/Applications' --allhomes
                 sudo killall Dock 
             }
             set_dock_user () {
                 sudo dockutil --remove all /Users/$1
-                sudo dockutil --add '~/Applications/Google Chrome.app' /Users/$1
+                sudo dockutil --add '/Applications/Google Chrome.app' /Users/$1
                 sudo dockutil --add '~/Downloads' /Users/$1
-                sudo dockutil --add '~/Applications' /Users/$1
+                sudo dockutil --add '/Applications' /Users/$1
                 
                 if [ $(whoami) == $1 ]; then
                     sudo killall Dock
