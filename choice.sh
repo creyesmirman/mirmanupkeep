@@ -188,6 +188,7 @@ do
             sudo managedsoftwareupdate && sudo managedsoftwareupdate --installonly
             ;;
         "Set Dock")
+            #function to set dock for all users. Edit this function to make changes to dock.
             set_dock () {
                 sudo dockutil --remove all --allhomes
                 sudo dockutil --add '/Applications/Google Chrome.app' --allhomes
@@ -195,9 +196,10 @@ do
                 sudo dockutil --add '~/Applications' --allhomes
                 sudo killall Dock 
             }
+            #function to set dock for a specific user. Edit this function to make changes to dock.
             set_dock_user () {
                 sudo dockutil --remove all /Users/$1
-                sudo dockutil --add 'Applications/Google Chrome.app' /Users/$1
+                sudo dockutil --add '~/Applications/Google Chrome.app' /Users/$1
                 sudo dockutil --add '~/Downloads' /Users/$1
                 sudo dockutil --add '~/Applications' /Users/$1
                 
