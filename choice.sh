@@ -199,7 +199,7 @@ do
             #function to set dock for a specific user. Edit this function to make changes to dock.
             set_dock_user () {
                 sudo dockutil --remove all /Users/$1
-                sudo dockutil --add '~/Applications/Google Chrome.app' /Users/$1
+                sudo dockutil --add '/Applications/Google Chrome.app' /Users/$1
                 sudo dockutil --add '~/Downloads' /Users/$1
                 sudo dockutil --add '~/Applications' /Users/$1
                 
