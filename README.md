@@ -10,5 +10,6 @@
     * Naming/Renaming laptops.
     * Adding/Removing users.
     * Changing Securly settings for quick enable/disable.
+    * Setting User Docks
 * Commands in the works include:
     * TBA

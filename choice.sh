@@ -120,7 +120,7 @@ do
                         sudo dscl . -append /Groups/staff GroupMembership $ausername 
                         sudo dscl . delete /Users/$ausername jpegphoto
                         sudo dscl . create /Users/$ausername Picture /Library/User\ Pictures/Nature/Earth.png
-                
+                        
                         sudo createhomedir -c 2>&1 | grep -v "shell-init"
 
                         echo "Creating user $ausername."
@@ -129,6 +129,8 @@ do
                         echo "Creating Unique ID of $usernum."
                         break;;
                     [Rr] ) 
+                        echo "Users List:"
+                        echo "$(dscl . -list /Users | grep -v '_' | grep -v 'daemon' | grep -v 'root' | grep -v 'nobody')"
                         read -p "What is the username to be removed?: " userdelete
                                 while true; do 
 		                            read -p "You picked $userdelete. Is this right? [Y or N]" deletechoice
@@ -188,20 +190,18 @@ do
             sudo managedsoftwareupdate && sudo managedsoftwareupdate --installonly
             ;;
         "Set Dock")
-            #function to set dock for all users. Edit this function to make changes to dock.
             set_dock () {
                 sudo dockutil --remove all --allhomes
                 sudo dockutil --add '/Applications/Google Chrome.app' --allhomes
                 sudo dockutil --add '~/Downloads' --allhomes
-                sudo dockutil --add '/Applications' --allhomes
+                sudo dockutil --add '~/Applications' --allhomes
                 sudo killall Dock 
             }
-            #function to set dock for a specific user. Edit this function to make changes to dock.
             set_dock_user () {
                 sudo dockutil --remove all /Users/$1
-                sudo dockutil --add '/Applications/Google Chrome.app' /Users/$1
+                sudo dockutil --add '~/Applications/Google Chrome.app' /Users/$1
                 sudo dockutil --add '~/Downloads' /Users/$1
-                sudo dockutil --add '/Applications' /Users/$1
+                sudo dockutil --add '~/Applications' /Users/$1
                 
                 if [ $(whoami) == $1 ]; then
                     sudo killall Dock
