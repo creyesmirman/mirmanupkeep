@@ -193,7 +193,7 @@ do
                 sudo dockutil --remove all --allhomes
                 sudo dockutil --add '/Applications/Google Chrome.app' --allhomes
                 sudo dockutil --add '~/Downloads' --allhomes
-                sudo dockutil --add '~/Applications' --allhomes
+                sudo dockutil --add '/Applications' --allhomes
                 sudo killall Dock 
             }
             #function to set dock for a specific user. Edit this function to make changes to dock.
