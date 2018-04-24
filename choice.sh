@@ -87,6 +87,22 @@ do
             echo ""
             ;;
         "Add/Remove Users")
+            restart_function() {
+                while true; do
+                read -p "Computer requires a restart. Do you want to restart now? (Y or N): " restartchoice
+                    case $restartchoice in
+                        [Yy] )
+                            echo "Restarting"
+                            sudo reboot
+                            break;;
+                        [Nn] )
+                            echo "Please restart using 'sudo reboot'"
+                            break;;
+                        *)
+                            echo "Please choose Y or N.";;
+                    esac
+                done
+            }
             echo "Adding / Removing Users"
                 while true; do
                 read -p "Are you trying to (A)dd or (R)emove a user?: " addremovechoice
@@ -127,6 +143,7 @@ do
                         echo "Creating real name $arealname."
                         echo "Creating password of $apassword"
                         echo "Creating Unique ID of $usernum."
+                        restart_function
                         break;;
                     [Rr] ) 
                         echo "Users List:"
@@ -193,6 +210,8 @@ do
             set_dock () {
                 sudo dockutil --remove all --allhomes
                 sudo dockutil --add '/Applications/Google Chrome.app' --allhomes
+                sudo dockutil --add '/Applications/Managed Software Center.app' --allhomes
+                sudo dockutil --add '/Applications/System Preferences.app' --allhomes
                 sudo dockutil --add '~/Downloads' --allhomes
                 sudo dockutil --add '/Applications' --allhomes
                 sudo killall Dock 
@@ -200,6 +219,8 @@ do
             set_dock_user () {
                 sudo dockutil --remove all /Users/$1
                 sudo dockutil --add '/Applications/Google Chrome.app' /Users/$1
+                sudo dockutil --add '/Applications/Managed Software Center.app' /Users/$1
+                sudo dockutil --all '/Applications/System Preferences.app' /Users/$1
                 sudo dockutil --add '~/Downloads' /Users/$1
                 sudo dockutil --add '/Applications' /Users/$1
                 
