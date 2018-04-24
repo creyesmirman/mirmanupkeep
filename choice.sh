@@ -1,4 +1,48 @@
 #!/bin/bash
+# Setting variables
+
+# Restart Option
+restart_function() {
+    while true; do
+        read -p "Computer requires a restart. Do you want to restart now? (Y or N): " restartchoice
+            case $restartchoice in
+                [Yy] )
+                    echo "Restarting"
+                        sudo reboot
+                        break;;
+                [Nn] )
+                    echo "Please restart using 'sudo reboot'"
+                        break;;
+                *)
+                    echo "Please choose Y or N.";;
+            esac
+    done
+}
+
+# Dock Options
+set_dock () {
+    sudo dockutil --remove all --allhomes
+    sudo dockutil --add '/Applications/Google Chrome.app' --allhomes
+    sudo dockutil --add '/Applications/Managed Software Center.app' --allhomes
+    sudo dockutil --add '/Applications/System Preferences.app' --allhomes
+    sudo dockutil --add '~/Downloads' --allhomes
+    sudo dockutil --add '/Applications' --allhomes
+    sudo killall Dock 
+}
+
+set_dock_user () {
+    sudo dockutil --remove all /Users/$1
+    sudo dockutil --add '/Applications/Google Chrome.app' /Users/$1
+    sudo dockutil --add '/Applications/Managed Software Center.app' /Users/$1
+    sudo dockutil --all '/Applications/System Preferences.app' /Users/$1
+    sudo dockutil --add '~/Downloads' /Users/$1
+    sudo dockutil --add '/Applications' /Users/$1
+                
+    if [ $(whoami) == $1 ]; then
+        sudo killall Dock
+    fi
+
+}
 
 PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Set Dock 8:Quit '
 options=("Printers" "MSC Manifest" "Rename Laptop" "Add/Remove Users" "Enable/Disable Securly" "Update MSC" "Set Dock" "Quit")
@@ -87,22 +131,6 @@ do
             echo ""
             ;;
         "Add/Remove Users")
-            restart_function() {
-                while true; do
-                read -p "Computer requires a restart. Do you want to restart now? (Y or N): " restartchoice
-                    case $restartchoice in
-                        [Yy] )
-                            echo "Restarting"
-                            sudo reboot
-                            break;;
-                        [Nn] )
-                            echo "Please restart using 'sudo reboot'"
-                            break;;
-                        *)
-                            echo "Please choose Y or N.";;
-                    esac
-                done
-            }
             echo "Adding / Removing Users"
                 while true; do
                 read -p "Are you trying to (A)dd or (R)emove a user?: " addremovechoice
@@ -207,29 +235,6 @@ do
             sudo managedsoftwareupdate && sudo managedsoftwareupdate --installonly
             ;;
         "Set Dock")
-            set_dock () {
-                sudo dockutil --remove all --allhomes
-                sudo dockutil --add '/Applications/Google Chrome.app' --allhomes
-                sudo dockutil --add '/Applications/Managed Software Center.app' --allhomes
-                sudo dockutil --add '/Applications/System Preferences.app' --allhomes
-                sudo dockutil --add '~/Downloads' --allhomes
-                sudo dockutil --add '/Applications' --allhomes
-                sudo killall Dock 
-            }
-            set_dock_user () {
-                sudo dockutil --remove all /Users/$1
-                sudo dockutil --add '/Applications/Google Chrome.app' /Users/$1
-                sudo dockutil --add '/Applications/Managed Software Center.app' /Users/$1
-                sudo dockutil --all '/Applications/System Preferences.app' /Users/$1
-                sudo dockutil --add '~/Downloads' /Users/$1
-                sudo dockutil --add '/Applications' /Users/$1
-                
-                if [ $(whoami) == $1 ]; then
-                    sudo killall Dock
-                fi
-
-            }
-
             echo "Setting Dock"
             while true; do
             read -p "Do you want to set for (A)ll Docks or (S)pecific Dock?: " dockchoice
