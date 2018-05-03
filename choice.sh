@@ -64,7 +64,7 @@ rename_machine () {
 
 #Main Options
 main_option () {
-    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Set Dock 8:Quit '  
+    PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Set Dock 8:Edit User 9:Quit  '  
 }
 
 #Edit MSC Client Identifier
@@ -146,8 +146,50 @@ delete_user () {
     done
 }
 
+# Edit User function
+edit_user () {
+    read -p "What is the username to be edited?: " useredit
+    stringcheck=$(dscl . -read /Groups/admin GroupMembership | awk -F ':' '{print $2}')
+        if [[ $stringcheck = *"$useredit"* ]]; then
+            while true; do
+            read -p "$useredit is an Admin. Would you like to set $useredit as a Standard User? [Y or N]: " setuseraccount
+                case $setuseraccount in
+                    [Yy] )
+                        echo "Setting $useredit to Standard..."
+                        sudo dscl . -create /Users/$useredit PrimaryGroupID 20
+                        sudo dseditgroup -o edit -d $useredit -t user admin
+                        echo "$useredit is now a Standard account."
+                        restart_function
+                        break;;
+                    [Nn] )
+                        break;;
+                    * )
+                        echo "Please select Y or N." ;;
+                esac
+            done
+        else
+            while true; do
+            read -p "$useredit is not an Admin. Would you like to set $useredit as an Administrator User? [Y or N]: " setadminaccount
+                case $setadminaccount in
+                    [Yy] )
+                        echo "Setting $useredit to Administrator..."
+                        sudo dscl . -create /Users/$useredit PrimaryGroupID 80
+                        sudo dseditgroup -o edit -a $useredit -t user admin
+                        echo "$useredit is now an Administrator account."
+                        restart_function
+                        break;;
+                    [Nn] )
+                        echo "OK."
+                        break;;
+                    * )
+                        echo "Please select Y or N. " ;;
+                esac
+            done            
+        fi
+}
+# Main Part
 main_option
-options=("Printers" "MSC Manifest" "Rename Laptop" "Add/Remove Users" "Enable/Disable Securly" "Update MSC" "Set Dock" "Quit")
+options=("Printers" "MSC Manifest" "Rename Laptop" "Add/Remove Users" "Enable/Disable Securly" "Update MSC" "Set Dock" "Edit User" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -291,6 +333,10 @@ do
                     echo "Please choose 'A' or 'S'."
                 esac
             done
+            ;;
+        "Edit User")
+            list_users
+            edit_user
             ;;
         "Quit")
             echo "Thank you."

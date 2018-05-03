@@ -11,5 +11,6 @@
     * Adding/Removing users.
     * Changing Securly settings for quick enable/disable.
     * Setting User Docks
+    * Set users to Standard/Admin
 * Commands in the works include:
     * TBA
