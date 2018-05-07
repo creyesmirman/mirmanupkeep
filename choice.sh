@@ -34,7 +34,7 @@ set_dock_user () {
     sudo dockutil --remove all /Users/$1
     sudo dockutil --add '/Applications/Google Chrome.app' /Users/$1
     sudo dockutil --add '/Applications/Managed Software Center.app' /Users/$1
-    sudo dockutil --all '/Applications/System Preferences.app' /Users/$1
+    sudo dockutil --add '/Applications/System Preferences.app' /Users/$1
     sudo dockutil --add '~/Downloads' /Users/$1
     sudo dockutil --add '/Applications' /Users/$1
                 
@@ -187,8 +187,20 @@ edit_user () {
             done            
         fi
 }
+
+dns_status () {
+dns_check=$(networksetup -getdnsservers Wi-Fi)
+if [[ $dns_check == *"There"* ]]; then
+    echo "Securly is currently DISABLED."
+elif [[ $dns_check == "50"* ]]; then 
+    echo "Securly is currently ENABLED."
+else
+    echo "DHCP or Securly settings are set."
+fi 
+}
 # Main Part
 main_option
+
 options=("Printers" "MSC Manifest" "Rename Laptop" "Add/Remove Users" "Enable/Disable Securly" "Update MSC" "Set Dock" "Edit User" "Quit")
 select opt in "${options[@]}"
 do
@@ -255,7 +267,10 @@ do
                         done
                         break;;
                         [Nn] ) echo "OK."
-                        break;;
+                            break;;
+                        "" )
+                            echo "Nothing entered. Exiting..."
+                            break;;
                         * ) echo "Please answer Y or N. ";;
                     esac
                 done
@@ -276,6 +291,9 @@ do
                         list_users
                         delete_user
                         break;;
+                    "" )
+                        echo "Nothing entered. Exiting..."
+                        break;;
                     * )
                         echo "Please use A or R."
                     esac
@@ -283,6 +301,7 @@ do
             ;;
         "Enable/Disable Securly")
             echo "Securly Settings"
+            dns_status
                 while true; do
                 read -p "Do you want to (E)nable or (D)isable Securly?: " securlychoice
                     case $securlychoice in
@@ -295,6 +314,9 @@ do
                         networksetup -setdnsservers Wi-Fi Empty
                         sudo killall -HUP mDNSResponder
                         echo "Securly Disabled."
+                        break;;
+                    "" )
+                        echo "Nothing entered. Exiting..."
                         break;;
                     * )
                         echo "Please select 'E' or 'D'."
@@ -328,6 +350,9 @@ do
                     read -p "What is the username of the dock you wish to set?: " dockuser
                     echo "Setting Dock for $dockuser."
                     set_dock_user $dockuser
+                    break;;
+                "" )
+                    echo "Nothing entered. Exiting..."
                     break;;
                 * )
                     echo "Please choose 'A' or 'S'."
