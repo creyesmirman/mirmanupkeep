@@ -1,5 +1,8 @@
 #!/bin/bash
-# Setting variables
+
+########################################
+# Setting Variables
+########################################
 
 # Restart Option
 restart_function() {
@@ -20,6 +23,8 @@ restart_function() {
 }
 
 # Dock Options
+
+## Setting Dock for all users.
 set_dock () {
     sudo dockutil --remove all --allhomes
     sudo dockutil --add '/Applications/Google Chrome.app' --allhomes
@@ -30,6 +35,7 @@ set_dock () {
     sudo killall Dock 
 }
 
+## Setting Dock for specific user.
 set_dock_user () {
     sudo dockutil --remove all /Users/$1
     sudo dockutil --add '/Applications/Google Chrome.app' /Users/$1
@@ -44,7 +50,7 @@ set_dock_user () {
 
 }
 
-#Rename machine
+# Rename machine
 rename_machine () {
     echo "Renaming this machine. Please use approved naming convention."
     read -p "What is the username? : " rename
@@ -62,17 +68,17 @@ rename_machine () {
     echo ""  
 }
 
-#Main Options
+# Main Options
 main_option () {
     PS3='Main Choices: 1:Printers 2:MSC Manifests 3:Rename Laptop 4:Add/Remove Users 5:Enable/Disable Securly 6:Update MSC 7:Set Dock 8:Edit User 9:Quit  '  
 }
 
-#Edit MSC Client Identifier
+# Edit MSC Client Identifier
 msc_identity () {
     sudo defaults write /Library/Preferences/ManagedInstalls.plist ClientIdentifier $1
 }
 
-#Adding a user
+# Adding a user
 add_user () {
     read -p "What is the username of the user?: " ausername
     read -p "What is the real name of the user?: " arealname
@@ -114,13 +120,13 @@ add_user () {
     echo "$ausername can now add printers."
 }
 
-#List users allowed to be removed.
+# List users allowed to be removed.
 list_users () {
     echo "Users List:"
     echo "$(dscl . -list /Users | grep -v '_' | grep -v 'daemon' | grep -v 'root' | grep -v 'nobody' | grep -v '/' | grep -v 'remote')"
 }
 
-#Delete a user
+# Delete a user
 delete_user () {
     read -p "What is the username to be removed?: " userdelete
     while true; do 
@@ -187,7 +193,8 @@ edit_user () {
             done            
         fi
 }
-
+Certificates
+# DNS Status Checks on Wi-Fi interface.
 dns_status () {
 dns_check=$(networksetup -getdnsservers Wi-Fi)
 if [[ $dns_check == *"There"* ]]; then
@@ -195,10 +202,12 @@ if [[ $dns_check == *"There"* ]]; then
 elif [[ $dns_check == "50"* ]]; then 
     echo "Securly is currently ENABLED."
 else
-    echo "DHCP or Securly settings are set."
+    echo "DHCP or Securly settings are not set! Please double check DNS settings."
 fi 
 }
+########################################
 # Main Part
+########################################
 main_option
 
 options=("Printers" "MSC Manifest" "Rename Laptop" "Add/Remove Users" "Enable/Disable Securly" "Update MSC" "Set Dock" "Edit User" "Quit")
