@@ -193,7 +193,7 @@ edit_user () {
             done            
         fi
 }
-Certificates
+
 # DNS Status Checks on Wi-Fi interface.
 dns_status () {
 dns_check=$(networksetup -getdnsservers Wi-Fi)
