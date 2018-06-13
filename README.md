@@ -13,4 +13,4 @@
     * Setting User Docks
     * Set users to Standard/Admin
 * Commands in the works include:
-    * TBA
+    * Camp Mode
