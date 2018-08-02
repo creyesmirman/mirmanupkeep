@@ -252,7 +252,7 @@ do
                     read -p "Would you like to change it? [Y or N] " manifestchoice
                     case $manifestchoice in
                         [Yy] ) PS3='Please choose from the following manifests: '
-                        options=('student_us' 'student_ls' 'faculty' 'student_cart')
+                        options=('student_us' 'student_ls' 'faculty' 'student_cart' 'classtop')
                         select manifestopt in "${options[@]}"
                         do 
                             case $manifestopt in
@@ -272,6 +272,11 @@ do
                                     main_option
                                     break;;
                                 "student_cart")
+                                    echo "Changing manifest to $manifestopt"
+                                    msc_identity $manifestopt
+                                    main_option
+                                    break;;
+                                "classtop")
                                     echo "Changing manifest to $manifestopt"
                                     msc_identity $manifestopt
                                     main_option
