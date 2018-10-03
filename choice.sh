@@ -206,7 +206,7 @@ else
 fi 
 }
 
-dockpreqs(){
+dockpreqs () { 
     echo "Checking Pre-reqs"
 
     echo "Checking for Xcode command line tools.."
@@ -239,6 +239,44 @@ dockpreqs(){
     "DockUtil installed!"
     fi
 }
+
+dockarray () {
+programsneeded=(brew dockutil)
+stuffitems=${programsneeded[*]}
+
+if [ -e /usr/bin/xcode-select ]; then
+	echo "Xcode command line tools already installed."
+else
+    echo "No Xcode command line tools installed. Installing..."
+    xcode-select --install
+    wait
+    echo "Xcode command line tools installed!"
+fi
+
+for item in $stuffitem
+  do
+    if [ -e /usr/local/bin/$item ]; then
+      echo "$item already installed."
+    else
+      case $item in
+        homebrew)
+            echo "Installing Homebrew..."
+            /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+		    wait
+            echo "Homebrew Installed!"
+        ;;
+		dockutil)
+            echo "Installing DockUtil..."
+	  		brew install dockutil
+			wait
+            echo "DockUtil Installed!"
+		;;
+      esac
+	fi
+  done
+	
+}
+
 ########################################
 # Main Part
 ########################################
@@ -393,7 +431,7 @@ do
         "Set Dock")
             echo "Setting Dock"
             echo "Doing some housekeeping..."
-            dockpreqs
+            dockarray
             wait
             while true; do
             read -p "Do you want to set for (A)ll Docks or (S)pecific Dock?: " dockchoice
