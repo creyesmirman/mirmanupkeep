@@ -431,7 +431,7 @@ do
         "Set Dock")
             echo "Setting Dock"
             echo "Doing some housekeeping..."
-            dockarray
+            dockpreqs
             wait
             while true; do
             read -p "Do you want to set for (A)ll Docks or (S)pecific Dock?: " dockchoice
