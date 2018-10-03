@@ -205,6 +205,30 @@ else
     echo "DHCP or Securly settings are not set! Please double check DNS settings."
 fi 
 }
+
+dockpreqs(){
+    echo "Checking Pre-reqs"
+
+    echo "Checking for Xcode command line tools.."
+    if [ -e /usr/bin/xcode-select ]; then
+    echo "Xcode command line tools already installed."
+    else
+    echo "No Xcode command line tools installed. Installing..."
+    xcode-select --install
+    wait
+    echo "Xcode command line tools installed!"
+    fi
+
+    echo "Checking for Homebrew"
+    if [ -e /usr/local/bin/brew ]; then
+    echo "Homebrew already installed."
+    else
+    echo "Homebrew not found. Installing..."
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    wait
+    echo "Homebrew installed!"
+    fi
+}
 ########################################
 # Main Part
 ########################################
@@ -358,6 +382,9 @@ do
             ;;
         "Set Dock")
             echo "Setting Dock"
+            echo "Doing some housekeeping..."
+            dockpreqs
+            wait
             while true; do
             read -p "Do you want to set for (A)ll Docks or (S)pecific Dock?: " dockchoice
                 case $dockchoice in
