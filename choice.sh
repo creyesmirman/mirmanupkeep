@@ -228,6 +228,16 @@ dockpreqs(){
     wait
     echo "Homebrew installed!"
     fi
+
+    echo "Checking for DockUtil"
+    if [ -e /usr/local/bin/dockutil ]; then
+    echo "DockUtil already installed."
+    else
+    echo "DockUtil not found. Installing..."
+    brew install dockutil
+    wait
+    "DockUtil installed!"
+    fi
 }
 ########################################
 # Main Part
