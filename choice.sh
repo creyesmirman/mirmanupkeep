@@ -244,14 +244,6 @@ dockarray () {
 programsneeded=(brew dockutil)
 stuffitems=${programsneeded[*]}
 
-if [ -e /usr/bin/xcode-select ]; then
-	echo "Xcode command line tools already installed."
-else
-    echo "No Xcode command line tools installed. Installing..."
-    xcode-select --install
-    wait
-    echo "Xcode command line tools installed!"
-fi
 
 for item in $stuffitem
   do
@@ -274,7 +266,15 @@ for item in $stuffitem
       esac
 	fi
   done
-	
+
+if [ -e /usr/bin/xcode-select ]; then
+	echo "xcode-select already installed."
+else
+    echo "No xcode-select installed. Installing..."
+    xcode-select --install
+    wait
+    echo "xcode-select installed!"
+fi	
 }
 
 ########################################
