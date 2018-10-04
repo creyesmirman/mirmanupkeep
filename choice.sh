@@ -23,7 +23,6 @@ restart_function() {
 }
 
 # Dock Options
-
 ## Setting Dock for all users.
 set_dock () {
     sudo dockutil --remove all --allhomes
@@ -241,11 +240,11 @@ dockpreqs () {
 }
 
 dockarray () {
-programsneeded=(brew dockutil)
+programsneeded=(brew dockutil xcode-select)
 stuffitems=${programsneeded[*]}
 
 
-for item in $stuffitem
+for item in $stuffitems
   do
     if [ -e /usr/local/bin/$item ]; then
       echo "$item already installed."
@@ -263,18 +262,21 @@ for item in $stuffitem
 			wait
             echo "DockUtil Installed!"
 		;;
+        xcode-select)
+            if [ -e /usr/bin/xcode-select ]; then
+	            echo "xcode-select already installed."
+            else
+                echo "No xcode-select installed. Installing..."
+                xcode-select --install
+                wait
+                echo "xcode-select installed!"
+            fi	
+        ;;
       esac
 	fi
   done
 
-if [ -e /usr/bin/xcode-select ]; then
-	echo "xcode-select already installed."
-else
-    echo "No xcode-select installed. Installing..."
-    xcode-select --install
-    wait
-    echo "xcode-select installed!"
-fi	
+
 }
 
 ########################################
@@ -431,7 +433,7 @@ do
         "Set Dock")
             echo "Setting Dock"
             echo "Doing some housekeeping..."
-            dockpreqs
+            dockarray
             wait
             while true; do
             read -p "Do you want to set for (A)ll Docks or (S)pecific Dock?: " dockchoice
