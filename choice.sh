@@ -250,7 +250,7 @@ for item in $stuffitems
       echo "$item already installed."
     else
       case $item in
-        homebrew)
+        brew)
             echo "Installing Homebrew..."
             /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 		    wait
